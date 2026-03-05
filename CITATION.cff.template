@@ -1,8 +1,0 @@
-cff-version: 1.2.0
-message: "If you use this software, please cite our paper."
-title: "DL1: Sparse→Full Sinogram Restoration for Localization Optoacoustic Tomography"
-authors:
-  - family-names: "[FAMILY_NAME]"
-    given-names: "[GIVEN_NAME]"
-version: 0.1.0
-date-released: 2026-03-05
