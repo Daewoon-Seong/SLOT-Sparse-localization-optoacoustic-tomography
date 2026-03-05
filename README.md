@@ -52,8 +52,8 @@ The loader supports both MATLAB v7 and v7.3 (HDF5) `.mat`.
 
 `--pos_xyz_dir` must contain the geometry files used by `pick_bp_meta_for_path()`:
 
-- `pos_sensor_xyz_ultracup.mat`
-- `pos_sensor_xyz_holycup.mat`
+- `pos_sensor_xyz_transducer_type1.mat`
+- `pos_sensor_xyz_transducer_type2.mat`
 
 Each file must contain a numeric array of shape `(512, 3)` (x,y,z coordinates per channel).
 If your variable name is not auto-detected, pass `--pos_xyz_var`.
