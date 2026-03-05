@@ -58,8 +58,8 @@ data/
     val/     *.mat
     test/    *.mat
   pos_sensor_xyz/
-    pos_sensor_xyz_ultracup.mat
-    pos_sensor_xyz_holycup.mat
+    pos_sensor_xyz_transducer_type1.mat
+    pos_sensor_xyz_transducer_type2.mat
 ```
 
 If you use an explicit index list instead of a regular sparse pattern:
@@ -79,8 +79,8 @@ data/
     val/     *.mat
     test/    *.mat
   pos_sensor_xyz/
-    pos_sensor_xyz_ultracup.mat
-    pos_sensor_xyz_holycup.mat
+    pos_sensor_xyz_transducer_type1.mat
+    pos_sensor_xyz_transducer_type2.mat
 ```
 
 ### DL3
