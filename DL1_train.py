@@ -308,7 +308,7 @@ def pick_bp_meta_for_path(mat_path: str,
 
     if "transducer_type1" in name:
         pfile = d / "pos_sensor_xyz_transducer_type1.mat"
-        meta.update({"bp_fs": 40e6, "bp_t0": 832, "tag": "ultracup"})
+        meta.update({"bp_fs": 40e6, "bp_t0": 832, "tag": "transducer_type1"})
     elif ("transducer_type2" in name) or ("holocup" in name):
         pfile = d / "pos_sensor_xyz_transducer_type2.mat"
         meta.update({
@@ -325,9 +325,9 @@ def pick_bp_meta_for_path(mat_path: str,
             meta["c0"] = 1480.0
             meta["tag"] += "_sos"
     else:
-        warnings.warn(f"[BP meta] {Path(mat_path).name}: tag not found -> fallback to ultracup parameters")
-        pfile = d / "pos_sensor_xyz_ultracup.mat"
-        meta.update({"bp_fs": 40e6, "bp_t0": 832, "tag": "fallback_ultracup"})
+        warnings.warn(f"[BP meta] {Path(mat_path).name}: tag not found -> fallback to transducer_type1 parameters")
+        pfile = d / "pos_sensor_xyz_transducer_type1.mat"
+        meta.update({"bp_fs": 40e6, "bp_t0": 832, "tag": "fallback_transducer_type1"})
 
     if not pfile.is_file():
         raise FileNotFoundError(f"pos_xyz file not found: {pfile}")
