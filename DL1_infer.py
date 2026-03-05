@@ -256,11 +256,11 @@ def pick_bp_meta_for_path(mat_path: str, pos_xyz_dir: str, pos_xyz_var: Optional
         "chan_block": 64,
         "z_slab": 10,
     }
-    if "ultracup" in name:
-        pfile = d / "pos_sensor_xyz_ultracup.mat"
-        meta.update({"bp_fs": 40e6, "bp_t0": 832, "tag": "ultracup"})
-    elif ("holycup" in name) or ("holocup" in name):
-        pfile = d / "pos_sensor_xyz_holycup.mat"
+    if "transducer_type1" in name:
+        pfile = d / "pos_sensor_xyz_transducer_type1.mat"
+        meta.update({"bp_fs": 40e6, "bp_t0": 832, "tag": "transducer_type1"})
+    elif "transducer_type2" in name:
+        pfile = d / "pos_sensor_xyz_transducer_type2.mat"
         meta.update({
             "c0": 1500.0,
             "bp_dims": (10e-3, 10e-3, 10e-3),
@@ -268,17 +268,17 @@ def pick_bp_meta_for_path(mat_path: str, pos_xyz_dir: str, pos_xyz_var: Optional
             "bp_filter": (0.1e6, 6e6),
         })
         if has("40 msps"):
-            meta.update({"bp_fs": 40e6, "bp_t0": 832, "tag": "holycup_40msps"})
-            # meta.update({"bp_fs": 40e6, "bp_t0": 824, "tag": "holycup_40msps"})
+            meta.update({"bp_fs": 40e6, "bp_t0": 832, "tag": "transducer_type2_40msps"})
+            # meta.update({"bp_fs": 40e6, "bp_t0": 824, "tag": "transducer_type2_40msps"})
         else:
-            meta.update({"bp_fs": 24e6, "bp_t0": 501, "tag": "holycup_24msps"})
+            meta.update({"bp_fs": 24e6, "bp_t0": 501, "tag": "transducer_type2_24msps"})
         if has("sos"):
             meta["c0"] = 1480.0
             meta["tag"] += "_sos"
     else:
-        warnings.warn(f"[BP meta] {Path(mat_path).name}: tag not found -> fallback to ultracup parameters")
-        pfile = d / "pos_sensor_xyz_ultracup.mat"
-        meta.update({"bp_fs": 40e6, "bp_t0": 832, "tag": "fallback_ultracup"})
+        warnings.warn(f"[BP meta] {Path(mat_path).name}: tag not found -> fallback to transducer_type1 parameters")
+        pfile = d / "pos_sensor_xyz_transducer_type1.mat"
+        meta.update({"bp_fs": 40e6, "bp_t0": 832, "tag": "fallback_transducer_type1"})
     if not pfile.is_file():
         raise FileNotFoundError(f"pos_xyz file not found: {pfile}")
     meta["pos_xyz"] = load_pos_sensor_xyz(str(pfile), pos_xyz_var).astype(np.float32)
