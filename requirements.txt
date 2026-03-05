@@ -1,0 +1,16 @@
+# Core
+numpy>=1.23
+scipy>=1.10
+h5py>=3.8
+tqdm>=4.66
+
+# Deep learning
+torch>=2.0
+torchvision>=0.15
+
+# Imaging / metrics
+scikit-image>=0.20
+matplotlib>=3.7
+
+# Optional (used only if installed)
+# pytorch-msssim>=1.0.0
