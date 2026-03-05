@@ -235,13 +235,13 @@ def pick_bp_meta_by_filename(mat_path: str, pos_xyz_dir: str, pos_xyz_var: Optio
         "bp_res":  (175, 175, 125),
         "bp_filter": (0.2e6, 8e6),
         "bp_fs": 40e6, "bp_t0": 832,
-        "chan_block": 128, "z_slab": 10, "tag": "ultracup"
+        "chan_block": 128, "z_slab": 10, "tag": "transducer_type1"
     }
-    if "holycup" in name or "holocup" in name:
+    if "transducer_type2" in name or "holocup" in name:
         meta.update({"c0":1500.0,"bp_dims":(10e-3,10e-3,10e-3),"bp_res":(128,128,128),"bp_filter":(0.1e6,6e6)})
-        if "40 msps" in name: meta.update({"bp_fs":40e6,"bp_t0":832,"tag":"holycup_40msps"})
-        else: meta.update({"bp_fs":24e6,"bp_t0":501,"tag":"holycup_24msps"})
-    pfile = D / ("pos_sensor_xyz_holycup.mat" if ("holycup" in name or "holocup" in name) else "pos_sensor_xyz_ultracup.mat")
+        if "40 msps" in name: meta.update({"bp_fs":40e6,"bp_t0":832,"tag":"transducer_type2_40msps"})
+        else: meta.update({"bp_fs":24e6,"bp_t0":501,"tag":"transducer_type2_24msps"})
+    pfile = D / ("pos_sensor_xyz_transducer_type2.mat" if ("transducer_type2" in name or "holocup" in name) else "pos_sensor_xyz_transducer_type1.mat")
     if not pfile.is_file(): raise FileNotFoundError(f"pos_xyz file not found: {pfile}")
     meta["pos_xyz"] = load_pos_sensor_xyz(str(pfile), pos_xyz_var).astype(np.float32)
     return meta
