@@ -287,8 +287,8 @@ def pick_bp_meta_for_path(mat_path: str,
                           pos_xyz_var: Optional[str]) -> Dict[str, Any]:
     """
     Select the pos_xyz file and BP parameters based on the filename.
-    - ultracup → pos_sensor_xyz_ultracup.mat, fs=40e6, t0=832, c0=1505, dims=(7e-3,7e-3,5e-3), res=(175,175,125), filt=(0.2e6,8e6)
-    - holycup/holocup → pos_sensor_xyz_holycup.mat,
+    - transducer_type1 → pos_sensor_xyz_transducer_type1.mat, fs=40e6, t0=832, c0=1505, dims=(7e-3,7e-3,5e-3), res=(175,175,125), filt=(0.2e6,8e6)
+    - transducer_type2 → pos_sensor_xyz_transducer_type2.mat,
         Default: fs=24e6, t0=501, c0=1500, dims=(10e-3,10e-3,105e-3), res=(128,128,128), filt=(0.2e6,8e6)
         If '40 msps' is present: fs=40e6, t0=832
         If 'sos' is present: c0=1480 (override)
@@ -306,11 +306,11 @@ def pick_bp_meta_for_path(mat_path: str,
         "z_slab": 10,
     }
 
-    if "ultracup" in name:
-        pfile = d / "pos_sensor_xyz_ultracup.mat"
+    if "transducer_type1" in name:
+        pfile = d / "pos_sensor_xyz_transducer_type1.mat"
         meta.update({"bp_fs": 40e6, "bp_t0": 832, "tag": "ultracup"})
-    elif ("holycup" in name) or ("holocup" in name):
-        pfile = d / "pos_sensor_xyz_holycup.mat"
+    elif ("transducer_type2" in name) or ("holocup" in name):
+        pfile = d / "pos_sensor_xyz_transducer_type2.mat"
         meta.update({
             "c0": 1500.0,
             "bp_dims": (10e-3, 10e-3, 10e-3),
@@ -318,9 +318,9 @@ def pick_bp_meta_for_path(mat_path: str,
             "bp_filter": (0.1e6, 6e6),
         })
         if has("40 msps"):
-            meta.update({"bp_fs": 40e6, "bp_t0": 832, "tag": "holycup_40msps"})
+            meta.update({"bp_fs": 40e6, "bp_t0": 832, "tag": "transducer_type2_40msps"})
         else:
-            meta.update({"bp_fs": 24e6, "bp_t0": 501, "tag": "holycup_24msps"})
+            meta.update({"bp_fs": 24e6, "bp_t0": 501, "tag": "transducer_type2_24msps"})
         if has("sos"):
             meta["c0"] = 1480.0
             meta["tag"] += "_sos"
@@ -802,7 +802,7 @@ def train(train_dir: str, val_dir: str, test_dir: str, out_dir: str,
     torch.manual_seed(seed);
     np.random.seed(seed)
     assert pos_xyz_dir and Path(
-        pos_xyz_dir).exists(), "--pos_xyz_dir is required (should contain pos_sensor_xyz_ultracup.mat / pos_sensor_xyz_holycup.mat)."
+        pos_xyz_dir).exists(), "--pos_xyz_dir is required (should contain pos_sensor_xyz_transducer_type1.mat / pos_sensor_xyz_transducer_type2.mat)."
 
     # --- File list ---
     tr_files = list_mat_files(train_dir);
