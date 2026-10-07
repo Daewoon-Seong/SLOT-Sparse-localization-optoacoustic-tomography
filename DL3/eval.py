@@ -7,7 +7,7 @@ density of the 270 s acquisition (GT) of the same position:
   dice            top 0.5 % mask vs GT top 0.5 % mask
   centerline      fraction of the GT centerline inside the dilated prediction mask
   faint           GT faint vessels (top 3 % minus top 0.5 %) covered by the prediction's top 3 % mask
-  branch_ratio    number of skeleton branch points of the prediction mask relative to GT
+  segment_ratio   number of skeleton segments (>= 4 voxels after removal of junction voxels) relative to GT
   density_relerr  median relative error of the density inside the GT vessel mask (top 2 %)
 
 usage:
@@ -28,7 +28,7 @@ def top_mask(v, q):
     return v > np.quantile(v, 1 - q)
 
 
-def skeleton_branches(mask):
+def skeleton_segments(mask):
     from skimage.morphology import skeletonize
     sk = np.zeros_like(mask, bool)
     if mask.any():                                   # skeletonize only the bounding box (much faster)
@@ -46,12 +46,12 @@ def metrics(pred, gt_s, gt_masks, gt_skel, gt_nbr, q):
     pm = top_mask(p, q); pf = top_mask(p, 0.03)
     g, g3, g2 = gt_masks[q], gt_masks[0.03], gt_masks[0.02]
     faint = g3 & ~gt_masks[0.005]
-    _, nbr = skeleton_branches(pm)
+    _, nbr = skeleton_segments(pm)
     return dict(dice=float(2 * (pm & g).sum() / (pm.sum() + g.sum())),
                 centerline=float((ndi.binary_dilation(pm) & gt_skel).sum() / max(gt_skel.sum(), 1)),
                 faint=float((pf & faint).sum() / max(faint.sum(), 1)),
                 false_vessel=float((pm & ~ndi.binary_dilation(g2, iterations=2)).sum() / max(pm.sum(), 1)),
-                branch_ratio=float(nbr / max(gt_nbr, 1)))
+                segment_ratio=float(nbr / max(gt_nbr, 1)))
 
 
 def density_metrics(pred, gt_s, gt_masks):
@@ -90,7 +90,7 @@ def main():
     pos = LocPosition(a.pos)
     gt_s = ndi.gaussian_filter(pos.target, 1.0)
     gt_masks = {q: top_mask(gt_s, q) for q in {a.q, 0.005, 0.02, 0.03}}
-    gt_skel, gt_nbr = skeleton_branches(gt_masks[a.q])
+    gt_skel, gt_nbr = skeleton_segments(gt_masks[a.q])
     out = Path(a.out); out.mkdir(parents=True, exist_ok=True)
     rows = []
     for T in a.durations:
@@ -107,7 +107,7 @@ def main():
                 ax.axis("off")
             fig.suptitle(f"{T:g} s input"); fig.tight_layout(); fig.savefig(out / f"mip_{T:g}s.png", dpi=150); plt.close(fig)
     df = pd.DataFrame(rows)
-    cols = ["method", "T", "bg_fraction", "dice", "centerline", "faint", "branch_ratio", "density_relerr"]
+    cols = ["method", "T", "bg_fraction", "dice", "centerline", "faint", "segment_ratio", "density_relerr"]
     df[cols].to_csv(out / "metrics.csv", index=False)
     print(df[cols].round(3).to_string(index=False))
 

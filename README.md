@@ -1,4 +1,4 @@
-﻿# SLOT: Sparse Localization Optoacoustic Tomography
+# SLOT: Sparse Localization Optoacoustic Tomography
 
 Code for the three networks of **"Learning-Based Sparse Localization Optoacoustic Tomography for Resource-Efficient
 Super-Resolution Angiography of the Mouse Brain"** (Laser & Photonics Reviews).
@@ -60,7 +60,7 @@ python DL3/eval.py --pos data/dl3_sample --ckpt weights/DL3_best.pt --out result
 |---|---|
 | `DL1/eval.py` | NRMSE on the missing channels for angular interpolation (network input) and DL 1 |
 | `DL2/eval.py` | NRMSE on the restored frames for linear interpolation and DL 2, against the clutter-filtered 100 Hz data |
-| `DL3/eval.py` | background fraction, Dice, centerline coverage, faint-vessel coverage, branch-point ratio and density error of the time-rescaled input and DL 3 for 30, 60, 90 and 135 s inputs |
+| `DL3/eval.py` | background fraction, Dice, centerline coverage, faint-vessel coverage, skeleton-segment ratio and density error of the time-rescaled input and DL 3 for 30, 60, 90 and 135 s inputs |
 
 Options: `--save_pred_mat` (DL 1) saves the restored sinograms, `--sparse_source random` (DL 1) and `--meas_jitter 0`
 (DL 2) evaluate random channel layouts and irregular frame timing.
