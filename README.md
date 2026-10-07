@@ -1,4 +1,4 @@
-# SLOT: Sparse Localization Optoacoustic Tomography
+﻿# SLOT: Sparse Localization Optoacoustic Tomography
 
 Code for the three networks of **"Learning-Based Sparse Localization Optoacoustic Tomography for Resource-Efficient
 Super-Resolution Angiography of the Mouse Brain"** (Laser & Photonics Reviews).
@@ -80,16 +80,6 @@ python DL3/train.py --train_dirs <pos_1> <pos_2> ... --val_dirs <pos_val> --out 
 The default arguments correspond to the settings used in the paper (DL 1: 2-fold channel reduction, K = 4 iterations;
 DL 2: 5-fold frame reduction, 10 s windows; DL 3: 30 to 135 s inputs). DL 2 for other repetition rates is trained with
 `--ds 2`, `--ds 4` or `--ds 10`.
-
-## Citation
-
-If you use this code, please cite:
-
-```
-D. Seong, D. Nozdriukhin, Y. Chen, J. Kim, M. Jeon, X. L. Deán-Ben, D. Razansky,
-"Learning-Based Sparse Localization Optoacoustic Tomography for Resource-Efficient Super-Resolution Angiography
-of the Mouse Brain," Laser & Photonics Reviews (2026).
-```
 
 ## License
 
