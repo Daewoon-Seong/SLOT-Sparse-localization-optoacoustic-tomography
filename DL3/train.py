@@ -180,6 +180,7 @@ def lv3_poisson(logr, y):
     return (torch.exp(logr) - y * logr).mean()
 
 
+@torch.no_grad()
 def lv3_eval(model, pos, T, variant, dev, q=0.005):
     x, base = pos.inputs(LV3_F0, LV3_F0 + int(T * 100), variant)
     xt = torch.from_numpy(x)[None].to(dev); bt = torch.from_numpy(base)[None, None].to(dev)
